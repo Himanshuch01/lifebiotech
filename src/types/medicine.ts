@@ -4,10 +4,10 @@ export interface Medicine {
   description: string;
   form: MedicineForm;
   price: number;
-  manufacturer: string;
+  manufacturer?: string;  // Optional - local data
   stockQuantity?: number;  // Local data
   stock?: number;         // Supabase data
-  category: string;
+  category?: string;      // Optional - local data
   imageUrl?: string;      // Local data
   image_url?: string;     // Supabase data
   composition?: string;
