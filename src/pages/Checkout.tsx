@@ -128,7 +128,8 @@ export default function Checkout() {
       if (itemsError) throw new Error(itemsError.message);
 
       // 3. Create Razorpay order and open checkout
-      await createPaymentSession({
+      console.log('Creating payment session for order:', order.id, 'amount:', totalAmount);
+      const paymentResult = await createPaymentSession({
         amount: totalAmount,
         metadata: {
           order_id: order.id,
@@ -150,9 +151,14 @@ export default function Checkout() {
           navigate('/orders');
         },
         onError: (err) => {
-          throw err;
+          console.error('Payment error callback:', err);
         }
       });
+
+      if (paymentResult && paymentResult.error) {
+        // Bubble up the error so the catch block handles it
+        throw paymentResult.error;
+      }
       
     } catch (error) {
       console.error('Checkout error:', error);
