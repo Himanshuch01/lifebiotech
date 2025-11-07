@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import emailjs from '@emailjs/browser';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -31,15 +32,13 @@ export default function Contact() {
       const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_u8dsao9';
       const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'wsCfMPYna3RQABf3V';
 
-      const emailjs = await import('@emailjs/browser');
-      // Initialize (recommended) so EmailJS uses your public key for this session
-      if (emailjs && typeof emailjs.init === 'function') {
-        try {
+      // Initialize EmailJS once (safe to call multiple times)
+      try {
+        if (typeof emailjs.init === 'function') {
           emailjs.init(publicKey);
-        } catch (initErr) {
-          // non-fatal: continue to send even if init throws
-          console.warn('EmailJS init warning:', initErr);
         }
+      } catch (initErr) {
+        console.warn('EmailJS init warning:', initErr);
       }
 
       const templateParams = {
@@ -50,7 +49,7 @@ export default function Contact() {
         message: data.message,
       };
 
-      const result: any = await emailjs.send(serviceId, templateId, templateParams, publicKey);
+  const result: any = await emailjs.send(serviceId, templateId, templateParams, publicKey);
       console.log('EmailJS send result:', result);
 
       // EmailJS returns an object like { status: 200, text: 'OK' }
