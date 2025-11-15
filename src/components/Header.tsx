@@ -28,7 +28,7 @@ export const Header = () => {
   const NavLink = ({ to, children }: { to: string; children: React.ReactNode }) => (
     <Link
       to={to}
-      className={`text-foreground hover:text-primary transition-all font-medium relative group ${
+      className={`text-foreground hover:text-primary transition-all font-medium relative group cursor-pointer ${
         isActive(to) ? 'text-primary' : ''
       }`}
       onClick={() => setMobileMenuOpen(false)}
