@@ -31,6 +31,11 @@ export default function Auth() {
   const [showOTPInput, setShowOTPInput] = useState(false);
   const [signupData, setSignupData] = useState<any>(null);
   const [otpSent, setOtpSent] = useState(false);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [resetEmail, setResetEmail] = useState('');
+  const [showResetOTP, setShowResetOTP] = useState(false);
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmNewPassword, setConfirmNewPassword] = useState('');
   const { signIn, signUp, user } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -205,6 +210,140 @@ export default function Auth() {
     }
   };
 
+  const handleForgotPassword = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    setErrors({});
+
+    const formData = new FormData(e.currentTarget);
+    const email = formData.get('resetEmail') as string;
+
+    try {
+      // Check if user exists
+      const { data: userData, error: userError } = await supabase.auth.signInWithPassword({
+        email,
+        password: 'dummy', // Just checking if user exists
+      });
+
+      // Generate and send OTP
+      const otp = generateOTP();
+      
+      const { error: otpError } = await (supabase as any)
+        .from('email_otp')
+        .insert({
+          email: email,
+          otp: otp,
+        });
+
+      if (otpError) {
+        throw new Error('Failed to generate OTP');
+      }
+
+      const emailResult = await sendOTPEmail(email, otp);
+      
+      if (!emailResult.success) {
+        throw new Error(emailResult.error || 'Failed to send OTP email');
+      }
+
+      setResetEmail(email);
+      setShowResetOTP(true);
+      
+      toast({
+        title: 'OTP Sent!',
+        description: `Please check ${email} for your verification code.`,
+      });
+    } catch (error: any) {
+      toast({
+        title: 'Error',
+        description: 'Failed to send reset code. Please check your email and try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleVerifyResetOTP = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    setErrors({});
+
+    const formData = new FormData(e.currentTarget);
+    const enteredOTP = formData.get('resetOtp') as string;
+    const newPass = formData.get('newPassword') as string;
+    const confirmPass = formData.get('confirmNewPassword') as string;
+
+    try {
+      if (newPass !== confirmPass) {
+        throw new Error('Passwords do not match');
+      }
+
+      if (newPass.length < 6) {
+        throw new Error('Password must be at least 6 characters');
+      }
+
+      // Verify OTP
+      const { data: otpData, error: otpError } = await (supabase as any)
+        .from('email_otp')
+        .select('*')
+        .eq('email', resetEmail)
+        .eq('otp', enteredOTP)
+        .eq('verified', false)
+        .gt('expires_at', new Date().toISOString())
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .maybeSingle();
+
+      if (otpError || !otpData) {
+        throw new Error('Invalid or expired OTP');
+      }
+
+      // Mark OTP as verified
+      await (supabase as any)
+        .from('email_otp')
+        .update({ verified: true })
+        .eq('id', otpData.id);
+
+      // Update password using admin API (requires proper setup)
+      const { error: updateError } = await supabase.auth.updateUser({
+        password: newPass
+      });
+
+      if (updateError) {
+        // If direct update fails, use password recovery flow
+        const { error: resetError } = await supabase.auth.resetPasswordForEmail(resetEmail);
+        if (resetError) {
+          throw new Error('Failed to reset password');
+        }
+        toast({
+          title: 'Check Your Email',
+          description: 'We sent you a password reset link. Please check your email.',
+        });
+      } else {
+        toast({
+          title: 'Password Reset!',
+          description: 'Your password has been updated successfully.',
+        });
+      }
+
+      // Reset state
+      setShowForgotPassword(false);
+      setShowResetOTP(false);
+      setResetEmail('');
+      setNewPassword('');
+      setConfirmNewPassword('');
+      setActiveTab('signin');
+    } catch (error: any) {
+      toast({
+        title: 'Reset Failed',
+        description: error.message || 'Failed to reset password. Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   
 
   return (
@@ -215,7 +354,103 @@ export default function Auth() {
           <p className="text-muted-foreground">Sign in to manage your orders and profile</p>
         </div>
 
-        <Tabs value={activeTab} onValueChange={setActiveTab}>
+        {showForgotPassword ? (
+          <Card>
+            <CardHeader>
+              <CardTitle>{showResetOTP ? 'Reset Password' : 'Forgot Password'}</CardTitle>
+              <CardDescription>
+                {showResetOTP 
+                  ? 'Enter the OTP and your new password'
+                  : 'Enter your email to receive a verification code'}
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              {showResetOTP ? (
+                <form onSubmit={handleVerifyResetOTP} className="space-y-4">
+                  <div>
+                    <Label htmlFor="resetOtp">Verification Code</Label>
+                    <Input
+                      id="resetOtp"
+                      name="resetOtp"
+                      type="text"
+                      placeholder="123456"
+                      maxLength={6}
+                      required
+                      className="text-center text-2xl tracking-widest"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="newPassword">New Password</Label>
+                    <Input
+                      id="newPassword"
+                      name="newPassword"
+                      type="password"
+                      placeholder="••••••••"
+                      required
+                      value={newPassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="confirmNewPassword">Confirm New Password</Label>
+                    <Input
+                      id="confirmNewPassword"
+                      name="confirmNewPassword"
+                      type="password"
+                      placeholder="••••••••"
+                      required
+                      value={confirmNewPassword}
+                      onChange={(e) => setConfirmNewPassword(e.target.value)}
+                    />
+                  </div>
+                  <div className="flex gap-2">
+                    <Button type="submit" className="flex-1 btn-primary" disabled={loading}>
+                      {loading ? 'Resetting...' : 'Reset Password'}
+                    </Button>
+                    <Button 
+                      type="button" 
+                      variant="outline" 
+                      onClick={() => {
+                        setShowResetOTP(false);
+                        setShowForgotPassword(false);
+                      }}
+                    >
+                      Back
+                    </Button>
+                  </div>
+                </form>
+              ) : (
+                <form onSubmit={handleForgotPassword} className="space-y-4">
+                  <div>
+                    <Label htmlFor="resetEmail">Email</Label>
+                    <Input
+                      id="resetEmail"
+                      name="resetEmail"
+                      type="email"
+                      placeholder="your@email.com"
+                      required
+                      value={resetEmail}
+                      onChange={(e) => setResetEmail(e.target.value)}
+                    />
+                  </div>
+                  <div className="flex gap-2">
+                    <Button type="submit" className="flex-1 btn-primary" disabled={loading}>
+                      {loading ? 'Sending...' : 'Send Verification Code'}
+                    </Button>
+                    <Button 
+                      type="button" 
+                      variant="outline" 
+                      onClick={() => setShowForgotPassword(false)}
+                    >
+                      Back
+                    </Button>
+                  </div>
+                </form>
+              )}
+            </CardContent>
+          </Card>
+        ) : (
+          <Tabs value={activeTab} onValueChange={setActiveTab}>
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="signin">Sign In</TabsTrigger>
             <TabsTrigger value="signup">Sign Up</TabsTrigger>
@@ -258,6 +493,15 @@ export default function Auth() {
                   <Button type="submit" className="w-full btn-primary" disabled={loading}>
                     {loading ? 'Signing in...' : 'Sign In'}
                   </Button>
+                  <div className="text-center mt-4">
+                    <button
+                      type="button"
+                      onClick={() => setShowForgotPassword(true)}
+                      className="text-sm text-primary hover:underline"
+                    >
+                      Forgot Password?
+                    </button>
+                  </div>
                 </form>
               </CardContent>
             </Card>
@@ -269,7 +513,7 @@ export default function Auth() {
                 <CardTitle>{showOTPInput ? 'Verify Email' : 'Create Account'}</CardTitle>
                 <CardDescription>
                   {showOTPInput 
-                    ? 'Enter the 6-digit code sent to your email' 
+                    ? 'Enter the 6-digit code sent to your email'
                     : 'Sign up to start ordering quality medicines'}
                 </CardDescription>
               </CardHeader>
@@ -370,6 +614,7 @@ export default function Auth() {
             </Card>
           </TabsContent>
         </Tabs>
+        )}
       </div>
     </div>
   );

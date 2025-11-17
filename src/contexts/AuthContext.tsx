@@ -12,6 +12,7 @@ interface AuthContextType {
   sendMagicLink: (email: string) => Promise<{ error: any }>;
   signOut: () => Promise<void>;
   loading: boolean;
+  onLogout?: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -19,7 +20,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 // Session timeout duration in milliseconds (4 minutes)
 const SESSION_TIMEOUT = 4 * 60 * 1000;
 
-export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+export const AuthProvider = ({ children, onLogout }: { children: React.ReactNode; onLogout?: () => void }) => {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -246,6 +247,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const signOut = async () => {
     await supabase.auth.signOut();
     setIsAdmin(false);
+    
+    // Call the onLogout callback to clear cart
+    if (onLogout) {
+      onLogout();
+    }
+    
     toast({
       title: 'Signed out',
       description: 'You have been signed out successfully.',
@@ -253,7 +260,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, session, isAdmin, signUp, signIn, sendMagicLink, signOut, loading }}>
+    <AuthContext.Provider value={{ user, session, isAdmin, signUp, signIn, sendMagicLink, signOut, loading, onLogout }}>
       {children}
     </AuthContext.Provider>
   );

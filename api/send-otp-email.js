@@ -38,7 +38,7 @@ export default async function handler(req, res) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'lifebiotech <onboarding@resend.dev>',
+        from: 'Life Biotech <noreply@lifebiotech.in>',
         to: email,
         subject: 'Verify Your Email - Life Biotech',
         html: `
