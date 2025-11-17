@@ -37,16 +37,19 @@ export const Footer = () => {
           </div>
 
           <div className="animate-fade-in stagger-2">
-            <h4 className="font-semibold mb-4 text-lg">Customer Service</h4>
+            <h4 className="font-semibold mb-4 text-lg">Policies</h4>
             <div className="space-y-2">
-              <Link to="/orders" className="block text-sm text-muted-foreground hover:text-primary transition-colors hover:translate-x-1 transform duration-200">
-                → My Orders
+              <Link to="/privacy-policy" className="block text-sm text-muted-foreground hover:text-primary transition-colors hover:translate-x-1 transform duration-200">
+                → Privacy Policy
               </Link>
-              <Link to="/cart" className="block text-sm text-muted-foreground hover:text-primary transition-colors hover:translate-x-1 transform duration-200">
-                → Cart
+              <Link to="/terms-and-conditions" className="block text-sm text-muted-foreground hover:text-primary transition-colors hover:translate-x-1 transform duration-200">
+                → Terms & Conditions
               </Link>
-              <Link to="/auth" className="block text-sm text-muted-foreground hover:text-primary transition-colors hover:translate-x-1 transform duration-200">
-                → Sign In
+              <Link to="/shipping-policy" className="block text-sm text-muted-foreground hover:text-primary transition-colors hover:translate-x-1 transform duration-200">
+                → Shipping Policy
+              </Link>
+              <Link to="/refund-policy" className="block text-sm text-muted-foreground hover:text-primary transition-colors hover:translate-x-1 transform duration-200">
+                → Refund Policy
               </Link>
             </div>
           </div>
@@ -76,11 +79,24 @@ export const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t mt-12 pt-8 text-center">
-          <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} Life Biotech. All rights reserved. | 
-            <span className="mx-2">Made with ❤️ for Healthcare</span>
-          </p>
+        <div className="border-t mt-12 pt-8">
+          <div className="text-center space-y-3">
+            <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 text-xs text-muted-foreground">
+              <Link to="/privacy-policy" className="hover:text-primary transition-colors">Privacy Policy</Link>
+              <span>•</span>
+              <Link to="/terms-and-conditions" className="hover:text-primary transition-colors">Terms & Conditions</Link>
+              <span>•</span>
+              <Link to="/shipping-policy" className="hover:text-primary transition-colors">Shipping Policy</Link>
+              <span>•</span>
+              <Link to="/refund-policy" className="hover:text-primary transition-colors">Cancellations & Refunds</Link>
+              <span>•</span>
+              <Link to="/contact" className="hover:text-primary transition-colors">Contact Us</Link>
+            </div>
+            <p className="text-sm text-muted-foreground">
+              &copy; {new Date().getFullYear()} Life Biotech. All rights reserved. | 
+              <span className="mx-2">Made with ❤️ for Healthcare</span>
+            </p>
+          </div>
         </div>
       </div>
     </footer>
