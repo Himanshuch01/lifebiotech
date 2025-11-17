@@ -72,8 +72,8 @@ Jankipuram Sector H, Lucknow
               </div>
               <div className="flex items-center space-x-2 group">
                 <Phone className="w-4 h-4 text-primary group-hover:scale-110 transition-transform" />
-                <a href="https://lifebiotech.in" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                  lifebiotech.in
+                <a href="tel:+919198476276" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                  +91-9198476276
                 </a>
               </div>
             </div>
