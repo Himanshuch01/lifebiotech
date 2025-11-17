@@ -263,7 +263,7 @@ const RefundPolicy = () => {
           <div className="bg-muted p-4 rounded-lg">
             <p><strong>Life Biotech</strong></p>
             <p>Email: lifebiotech.org@gmail.com</p>
-            <p>Phone: +91-8601748352</p>
+            <p>Phone: +91-9198476276</p>
             <p>Support Hours: Monday-Saturday, 9 AM - 6 PM IST</p>
           </div>
           <p className="text-sm text-muted-foreground mt-4">

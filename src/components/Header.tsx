@@ -45,9 +45,11 @@ export const Header = () => {
       <nav className="container-custom py-4">
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center space-x-2 group">
-            <div className="w-10 h-10 bg-gradient-hero rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform shadow-md">
-              <span className="text-xl font-bold text-white">LB</span>
-            </div>
+            <img 
+              src="/logo.png" 
+              alt="Life Biotech Logo" 
+              className="h-10 w-auto group-hover:scale-110 transition-transform"
+            />
             <span className="text-xl sm:text-2xl font-bold gradient-text">Life Biotech</span>
           </Link>
 

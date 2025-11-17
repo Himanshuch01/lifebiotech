@@ -113,8 +113,8 @@ export default function Contact() {
                 <div>
                   <h3 className="font-semibold mb-1">Address</h3>
                   <p className="text-muted-foreground">
-                    Plot No. 120, Vishwapriya Nagar,<br />
-                    Bengur, Bengaluru, Karnataka
+                    Kurshi Road, Near Puja Narshing Home,<br />
+                    Jankipuram Sector H, Lucknow
                   </p>
                 </div>
               </div>
@@ -123,7 +123,7 @@ export default function Contact() {
                 <Mail className="w-6 h-6 text-primary mt-1" />
                 <div>
                   <h3 className="font-semibold mb-1">Email</h3>
-                  <p className="text-muted-foreground">info@lifebiotech.org</p>
+                  <p className="text-muted-foreground">lifebiotech.org@gmail.com</p>
                 </div>
               </div>
 
@@ -131,7 +131,7 @@ export default function Contact() {
                 <Phone className="w-6 h-6 text-primary mt-1" />
                 <div>
                   <h3 className="font-semibold mb-1">Phone</h3>
-                  <p className="text-muted-foreground">+91 (80) 2345-6789</p>
+                  <p className="text-muted-foreground">+91-9198476276</p>
                 </div>
               </div>
             </Card>
