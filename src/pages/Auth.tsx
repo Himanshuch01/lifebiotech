@@ -26,7 +26,6 @@ export default function Auth() {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const { signIn, signUp, user } = useAuth();
-  const { sendMagicLink } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -67,19 +66,7 @@ export default function Auth() {
     }
   };
 
-  const handleSendMagicLink = async (e?: React.FormEvent) => {
-    e?.preventDefault();
-    setErrors({});
 
-    // Grab the email value from the sign-in input
-    const email = (document.getElementById('signin-email') as HTMLInputElement)?.value;
-    if (!email) {
-      setErrors({ email: 'Please enter your email to receive the magic link' });
-      return;
-    }
-
-    await sendMagicLink(email);
-  };
 
   const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -165,14 +152,9 @@ export default function Auth() {
                       <p className="text-sm text-destructive mt-1">{errors.password}</p>
                     )}
                   </div>
-                  <div className="flex flex-col gap-2">
-                    <Button type="submit" className="w-full btn-primary" disabled={loading}>
-                      {loading ? 'Signing in...' : 'Sign In'}
-                    </Button>
-                    <Button type="button" variant="ghost" className="w-full" onClick={handleSendMagicLink}>
-                      Send magic link
-                    </Button>
-                  </div>
+                  <Button type="submit" className="w-full btn-primary" disabled={loading}>
+                    {loading ? 'Signing in...' : 'Sign In'}
+                  </Button>
                 </form>
               </CardContent>
             </Card>
@@ -198,19 +180,6 @@ export default function Auth() {
                     {errors.fullName && (
                       <p className="text-sm text-destructive mt-1">{errors.fullName}</p>
                     )}
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <Button type="button" variant="ghost" className="w-full" onClick={async () => {
-                      setErrors({});
-                      const email = (document.getElementById('signup-email') as HTMLInputElement)?.value;
-                      if (!email) {
-                        setErrors({ email: 'Please enter an email to receive the magic link' });
-                        return;
-                      }
-                      await sendMagicLink(email);
-                    }}>
-                      Send magic link for confirmation
-                    </Button>
                   </div>
                   <div>
                     <Label htmlFor="signup-email">Email</Label>
