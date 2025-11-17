@@ -18,19 +18,26 @@ module.exports = async function handler(req, res) {
   }
 
   try {
+    console.log('Received request:', { method: req.method, body: req.body });
+    
     const { email, otp } = req.body;
 
     if (!email || !otp) {
+      console.error('Missing email or OTP');
       return res.status(400).json({ error: "Email and OTP are required" });
     }
 
     const RESEND_API_KEY = process.env.RESEND_API_KEY;
     
+    console.log('API Key exists:', !!RESEND_API_KEY, 'Length:', RESEND_API_KEY?.length);
+    
     if (!RESEND_API_KEY) {
-      console.error('Resend API key not found');
+      console.error('Resend API key not found in environment');
       return res.status(500).json({ error: "Email service not configured" });
     }
 
+    console.log('Sending email to Resend API...', { to: email, from: 'Life Biotech <noreply@lifebiotech.in>' });
+    
     const response = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
@@ -84,9 +91,11 @@ module.exports = async function handler(req, res) {
       }),
     });
 
+    console.log('Resend API response status:', response.status);
+    
     if (!response.ok) {
       const errorData = await response.json();
-      console.error('Resend API error:', errorData);
+      console.error('Resend API error response:', JSON.stringify(errorData));
       return res.status(response.status).json({ 
         error: errorData.message || 'Failed to send email',
         details: errorData 
@@ -94,11 +103,13 @@ module.exports = async function handler(req, res) {
     }
 
     const result = await response.json();
+    console.log('Email sent successfully:', result.id);
     res.json({ success: true, messageId: result.id });
   } catch (error) {
-    console.error("Email sending failed:", error);
+    console.error("Email sending failed with exception:", error);
     res.status(500).json({
       error: error instanceof Error ? error.message : "Email sending failed",
+      stack: error instanceof Error ? error.stack : undefined
     });
   }
 }

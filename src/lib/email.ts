@@ -8,10 +8,11 @@ const getEmailApiUrl = () => {
 };
 
 export const sendOTPEmail = async (email: string, otp: string) => {
-  console.log('Sending OTP email via server...', { email });
+  const apiUrl = getEmailApiUrl();
+  console.log('Sending OTP email via server...', { email, apiUrl });
 
   try {
-    const response = await fetch(getEmailApiUrl(), {
+    const response = await fetch(apiUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -22,13 +23,25 @@ export const sendOTPEmail = async (email: string, otp: string) => {
       }),
     });
 
+    console.log('Response status:', response.status);
+    
+    // Try to get response text first
+    const responseText = await response.text();
+    console.log('Response text:', responseText);
+
     if (!response.ok) {
-      const errorData = await response.json();
+      let errorData;
+      try {
+        errorData = JSON.parse(responseText);
+      } catch {
+        // If response is not JSON, throw with the text
+        throw new Error(`Server error: ${responseText.substring(0, 100)}`);
+      }
       console.error('Resend API error:', errorData);
-      throw new Error(errorData.message || `Failed to send email (${response.status})`);
+      throw new Error(errorData.message || errorData.error || `Failed to send email (${response.status})`);
     }
 
-    const result = await response.json();
+    const result = JSON.parse(responseText);
     console.log('Email sent successfully:', result);
     return { success: true };
   } catch (error: any) {
