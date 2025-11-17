@@ -60,19 +60,20 @@ export const Footer = () => {
               <div className="flex items-start space-x-2 group">
                 <MapPin className="w-4 h-4 mt-1 text-primary group-hover:scale-110 transition-transform" />
                 <p className="text-sm text-muted-foreground">
-                  Plot No. 120, Vishwapriya Nagar, Bengur, Bengaluru, Karnataka
+                  Kurshi Road, Near Puja Narshing Home,
+Jankipuram Sector H, Lucknow
                 </p>
               </div>
               <div className="flex items-center space-x-2 group">
                 <Mail className="w-4 h-4 text-primary group-hover:scale-110 transition-transform" />
-                <a href="mailto:info@lifebiotech.org" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                  info@lifebiotech.org
+                <a href="mailto:lifebiotech.org@gmail.com" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                  lifebiotech.org@gmail.com
                 </a>
               </div>
               <div className="flex items-center space-x-2 group">
                 <Phone className="w-4 h-4 text-primary group-hover:scale-110 transition-transform" />
-                <a href="https://www.lifebiotech.org" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                  www.lifebiotech.org
+                <a href="https://lifebiotech.in" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                  lifebiotech.in
                 </a>
               </div>
             </div>
