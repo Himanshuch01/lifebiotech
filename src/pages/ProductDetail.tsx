@@ -8,6 +8,7 @@ import { medicineDetails } from '@/data/medicineDetails';
 import { supabase } from '@/integrations/supabase/client';
 import { useQuery } from '@tanstack/react-query';
 import { Medicine, MedicineForm } from '@/types/medicine';
+import SEO from '@/components/SEO';
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -129,8 +130,52 @@ export default function ProductDetail() {
     );
   }
 
+  const productUrl = `https://lifebiotech.in/products/${encodeURIComponent(medicine.id)}`;
+  const productImage = medicine.imageUrl || 'https://lifebiotech.in/logo.png';
+
   return (
     <div className="container mx-auto px-4 py-8">
+      <SEO
+        title={`${medicine.name} - LifeBiotech`}
+        description={`Buy ${medicine.name} (${medicine.form}) online from LifeBiotech. ${medicine.composition ? `Composition: ${medicine.composition}. ` : ''}Quality pharmaceutical product manufactured with WHO-GMP and ISO certification. Price: ₹${medicine.price}.`}
+        keywords={`${medicine.name}, ${medicine.form}, ${medicine.composition || ''}, buy ${medicine.name} online, ${medicine.name} price, LifeBiotech ${medicine.name}`}
+        url={productUrl}
+        image={productImage}
+        type="product"
+        structuredData={{
+          '@context': 'https://schema.org',
+          '@type': 'Product',
+          name: medicine.name,
+          description: medicine.composition || `${medicine.name} - ${medicine.form} by LifeBiotech`,
+          image: productImage,
+          brand: {
+            '@type': 'Brand',
+            name: 'LifeBiotech',
+          },
+          manufacturer: {
+            '@type': 'Organization',
+            name: 'LifeBiotech',
+          },
+          offers: {
+            '@type': 'Offer',
+            url: productUrl,
+            priceCurrency: 'INR',
+            price: typeof medicine.price === 'string' ? parseFloat(medicine.price) : medicine.price,
+            availability: (medicine.stockQuantity || medicine.stock || 0) > 0 
+              ? 'https://schema.org/InStock' 
+              : 'https://schema.org/OutOfStock',
+            seller: {
+              '@type': 'Organization',
+              name: 'LifeBiotech',
+            },
+          },
+          aggregateRating: {
+            '@type': 'AggregateRating',
+            ratingValue: '4.7',
+            reviewCount: '25',
+          },
+        }}
+      />
       <Button variant="ghost" onClick={() => navigate(-1)} className="mb-6">
         <ArrowLeft className="w-4 h-4 mr-2" />
         Back

@@ -1,6 +1,30 @@
+import SEO from '@/components/SEO';
+
 export default function About() {
   return (
     <div className="container-custom py-12">
+      <SEO
+        title="About Us - LifeBiotech Pharmaceutical Company"
+        description="Learn about LifeBiotech, a trusted pharmaceutical manufacturing company led by Mr. Ashish Shukla. We deliver safe, reliable, and high-quality medicines to communities across India with a mission to make advanced healthcare solutions affordable for everyone."
+        keywords="about LifeBiotech, pharmaceutical company India, Mr. Ashish Shukla, pharmaceutical manufacturing, healthcare company, pharmaceutical company Lucknow, pharmaceutical company history"
+        url="https://lifebiotech.in/about"
+        structuredData={{
+          '@context': 'https://schema.org',
+          '@type': 'AboutPage',
+          name: 'About LifeBiotech',
+          description: 'LifeBiotech is a trusted pharmaceutical manufacturing company dedicated to delivering safe, reliable, and high-quality medicines.',
+          url: 'https://lifebiotech.in/about',
+          mainEntity: {
+            '@type': 'Organization',
+            name: 'LifeBiotech',
+            founder: {
+              '@type': 'Person',
+              name: 'Mr. Ashish Shukla',
+            },
+            description: 'LifeBiotech is a trusted pharmaceutical manufacturing company dedicated to delivering safe, reliable, and high-quality medicines to communities across India.',
+          },
+        }}
+      />
       <h1 className="text-4xl font-bold mb-6">About Life Biotech</h1>
 
       <div className="grid md:grid-cols-2 gap-10 items-center">

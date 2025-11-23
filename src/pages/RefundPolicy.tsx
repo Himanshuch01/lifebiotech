@@ -1,9 +1,16 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AlertCircle, CheckCircle, XCircle, Clock } from "lucide-react";
+import SEO from "@/components/SEO";
 
 const RefundPolicy = () => {
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
+      <SEO
+        title="Cancellations and Refunds Policy - LifeBiotech"
+        description="LifeBiotech refund and cancellation policy. Learn about our return process, refund timeline, and eligibility criteria for pharmaceutical products. Full refund for damaged or defective products."
+        keywords="refund policy, cancellation policy, return policy, LifeBiotech refund, pharmaceutical refund policy, order cancellation"
+        url="https://lifebiotech.in/refund-policy"
+      />
       <h1 className="text-4xl font-bold mb-8">Cancellations and Refunds Policy</h1>
       
       <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">

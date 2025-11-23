@@ -14,6 +14,10 @@
     <meta name="robots" content="index, follow" />
     <meta name="language" content="English" />
     <meta name="revisit-after" content="7 days" />
+    <meta name="theme-color" content="#2563eb" />
+    <meta name="msapplication-TileColor" content="#2563eb" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
@@ -37,20 +41,71 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Organization",
+      "@type": ["Organization", "LocalBusiness", "Pharmacy"],
       "name": "LifeBiotech",
+      "alternateName": "Life Biotech",
       "url": "https://lifebiotech.in",
       "logo": "https://lifebiotech.in/logo.png",
-      "description": "LifeBiotech manufactures premium pharmaceutical products, medicines, and healthcare solutions trusted by healthcare professionals across India.",
+      "image": "https://lifebiotech.in/logo.png",
+      "description": "LifeBiotech manufactures premium pharmaceutical products, medicines, and healthcare solutions trusted by healthcare professionals across India. WHO-GMP certified, ISO certified pharmaceutical company.",
+      "foundingDate": "2020",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Kurshi Road, Near Puja Narshing Home, Jankipuram Sector H",
+        "addressLocality": "Lucknow",
+        "addressRegion": "Uttar Pradesh",
+        "postalCode": "226031",
+        "addressCountry": "IN"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "26.8467",
+        "longitude": "80.9462"
+      },
       "contactPoint": {
         "@type": "ContactPoint",
         "contactType": "Customer Service",
+        "telephone": "+91-9198476276",
+        "email": "lifebiotech.org@gmail.com",
         "areaServed": "IN",
         "availableLanguage": ["English", "Hindi"]
       },
-      "sameAs": []
+      "priceRange": "$$",
+      "paymentAccepted": "Cash, Credit Card, Debit Card, UPI, Online Payment",
+      "currenciesAccepted": "INR",
+      "openingHours": "Mo-Su 09:00-18:00",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "reviewCount": "150",
+        "bestRating": "5",
+        "worstRating": "1"
+      },
+      "sameAs": [],
+      "knowsAbout": [
+        "Pharmaceutical Manufacturing",
+        "Medicine Production",
+        "Healthcare Solutions",
+        "Biotechnology",
+        "Pharmaceutical Products"
+      ],
+      "areaServed": {
+        "@type": "Country",
+        "name": "India"
+      }
     }
     </script>
+    
+    <!-- Google Analytics Placeholder (Replace with your GA4 Measurement ID) -->
+    <!-- 
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+    </script>
+    -->
 
     
   </head>

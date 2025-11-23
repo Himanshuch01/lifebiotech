@@ -1,8 +1,15 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import SEO from "@/components/SEO";
 
 const TermsAndConditions = () => {
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
+      <SEO
+        title="Terms and Conditions - LifeBiotech"
+        description="Read LifeBiotech's Terms and Conditions. Understand the terms of use for our pharmaceutical products and services. Includes ordering, payment, shipping, and refund policies."
+        keywords="terms and conditions, terms of service, user agreement, LifeBiotech terms, pharmaceutical terms, online pharmacy terms"
+        url="https://lifebiotech.in/terms-and-conditions"
+      />
       <h1 className="text-4xl font-bold mb-8">Terms and Conditions</h1>
       
       <Card className="mb-6">

@@ -1,8 +1,15 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import SEO from "@/components/SEO";
 
 const PrivacyPolicy = () => {
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
+      <SEO
+        title="Privacy Policy - LifeBiotech"
+        description="Read LifeBiotech's Privacy Policy. Learn how we collect, use, and protect your personal information. We are committed to protecting your privacy and data security."
+        keywords="privacy policy, data protection, LifeBiotech privacy, personal information, data security, GDPR compliance, privacy rights"
+        url="https://lifebiotech.in/privacy-policy"
+      />
       <h1 className="text-4xl font-bold mb-8">Privacy Policy</h1>
       
       <Card className="mb-6">

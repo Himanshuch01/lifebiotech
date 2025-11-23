@@ -11,6 +11,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useQuery } from '@tanstack/react-query';
 import { medicines } from '@/data/medicines';
 import { Medicine } from '@/types/medicine';
+import SEO from '@/components/SEO';
 
 export default function Products() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -77,6 +78,32 @@ export default function Products() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
+      <SEO
+        title="Pharmaceutical Products - LifeBiotech"
+        description="Browse our comprehensive range of quality pharmaceutical products including tablets, injections, syrups, and specialized formulations. All products manufactured with WHO-GMP and ISO certification standards."
+        keywords="pharmaceutical products, medicines online, tablets, injections, syrups, pharmaceutical formulations, buy medicines online India, pharmaceutical products list, LifeBiotech products, quality medicines"
+        url="https://lifebiotech.in/products"
+        structuredData={{
+          '@context': 'https://schema.org',
+          '@type': 'CollectionPage',
+          name: 'Pharmaceutical Products - LifeBiotech',
+          description: 'Browse our comprehensive range of quality pharmaceutical products',
+          url: 'https://lifebiotech.in/products',
+          mainEntity: {
+            '@type': 'ItemList',
+            itemListElement: products?.slice(0, 10).map((product, index) => ({
+              '@type': 'ListItem',
+              position: index + 1,
+              item: {
+                '@type': 'Product',
+                name: product.name,
+                description: product.composition,
+                url: `https://lifebiotech.in/products/${encodeURIComponent(slugify(product.id))}`,
+              },
+            })),
+          },
+        }}
+      />
       <div className="container-custom py-8 sm:py-12">
         <div className="mb-8 sm:mb-12 animate-fade-in">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 gradient-text">Our Products</h1>

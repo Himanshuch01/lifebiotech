@@ -1,9 +1,16 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Package, Truck, Clock, MapPin } from "lucide-react";
+import SEO from "@/components/SEO";
 
 const ShippingPolicy = () => {
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
+      <SEO
+        title="Shipping Policy - LifeBiotech"
+        description="LifeBiotech shipping policy. Pan-India delivery available. Free shipping on orders above ₹500. Standard delivery 3-7 days, express delivery 2-3 days. Track your orders in real-time."
+        keywords="shipping policy, delivery policy, LifeBiotech shipping, free shipping, express delivery, order tracking, pharmaceutical delivery India"
+        url="https://lifebiotech.in/shipping-policy"
+      />
       <h1 className="text-4xl font-bold mb-8">Shipping Policy</h1>
       
       <Card className="mb-6">

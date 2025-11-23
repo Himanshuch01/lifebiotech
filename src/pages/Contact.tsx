@@ -5,6 +5,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { MapPin, Mail, Phone, Loader2 } from 'lucide-react';
+import SEO from '@/components/SEO';
 
 export default function Contact() {
   const [isLoading, setIsLoading] = useState(false);
@@ -94,6 +95,39 @@ export default function Contact() {
 
   return (
     <div className="container-custom py-12">
+      <SEO
+        title="Contact Us - LifeBiotech"
+        description="Get in touch with LifeBiotech. Contact us for inquiries about our pharmaceutical products, services, or partnerships. Located in Lucknow, India. Email: lifebiotech.org@gmail.com | Phone: +91-9198476276"
+        keywords="contact LifeBiotech, pharmaceutical company contact, LifeBiotech address, LifeBiotech phone number, LifeBiotech email, pharmaceutical company Lucknow contact"
+        url="https://lifebiotech.in/contact"
+        structuredData={{
+          '@context': 'https://schema.org',
+          '@type': 'ContactPage',
+          name: 'Contact LifeBiotech',
+          description: 'Get in touch with LifeBiotech for inquiries about our pharmaceutical products and services',
+          url: 'https://lifebiotech.in/contact',
+          mainEntity: {
+            '@type': 'Organization',
+            name: 'LifeBiotech',
+            address: {
+              '@type': 'PostalAddress',
+              streetAddress: 'Kurshi Road, Near Puja Narshing Home, Jankipuram Sector H',
+              addressLocality: 'Lucknow',
+              addressRegion: 'Uttar Pradesh',
+              postalCode: '226031',
+              addressCountry: 'IN',
+            },
+            contactPoint: {
+              '@type': 'ContactPoint',
+              contactType: 'Customer Service',
+              telephone: '+91-9198476276',
+              email: 'lifebiotech.org@gmail.com',
+              areaServed: 'IN',
+              availableLanguage: ['English', 'Hindi'],
+            },
+          },
+        }}
+      />
       <div className="max-w-5xl mx-auto">
         <h1 className="text-4xl font-bold mb-6">Contact Us</h1>
         

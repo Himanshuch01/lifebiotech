@@ -4,6 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { ArrowRight, Shield, Zap, Heart, Award } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import SEO from '@/components/SEO';
 
 export default function Home() {
   const { data: featuredProducts } = useQuery({
@@ -19,6 +20,41 @@ export default function Home() {
 
   return (
     <div>
+      <SEO
+        title="LifeBiotech | Leading Pharmaceutical & Healthcare Solutions in India"
+        description="LifeBiotech manufactures premium pharmaceutical products, medicines, and healthcare solutions trusted by healthcare professionals across India. Quality healthcare at affordable prices. WHO-GMP certified, ISO certified pharmaceutical company."
+        keywords="lifebiotech, life biotech, pharmaceutical products, medicines, healthcare solutions, pharmacy, drugs, medical supplies, healthcare India, pharmaceutical company, quality medicines, affordable healthcare, biotech, biotechnology, pharmaceutical manufacturing, WHO-GMP certified, ISO certified, pharmaceutical company Lucknow, medicines online India"
+        url="https://lifebiotech.in/"
+        structuredData={{
+          '@context': 'https://schema.org',
+          '@type': 'Organization',
+          name: 'LifeBiotech',
+          url: 'https://lifebiotech.in',
+          logo: 'https://lifebiotech.in/logo.png',
+          description: 'LifeBiotech manufactures premium pharmaceutical products, medicines, and healthcare solutions trusted by healthcare professionals across India.',
+          contactPoint: {
+            '@type': 'ContactPoint',
+            contactType: 'Customer Service',
+            telephone: '+91-9198476276',
+            email: 'lifebiotech.org@gmail.com',
+            areaServed: 'IN',
+            availableLanguage: ['English', 'Hindi'],
+          },
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: 'Kurshi Road, Near Puja Narshing Home, Jankipuram Sector H',
+            addressLocality: 'Lucknow',
+            addressRegion: 'Uttar Pradesh',
+            postalCode: '226031',
+            addressCountry: 'IN',
+          },
+          aggregateRating: {
+            '@type': 'AggregateRating',
+            ratingValue: '4.8',
+            reviewCount: '150',
+          },
+        }}
+      />
       {/* Hero Section */}
       <section className="relative bg-gradient-hero text-white py-20 md:py-32 overflow-hidden">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE2YzAtMiAyLTQgNC00czQgMiA0IDQtMiA0LTQgNGMtMiAwLTQtMi00LTR6bS0yNCAwYzAtMiAyLTQgNC00czQgMiA0IDQtMiA0LTQgNGMtMiAwLTQtMi00LTR6Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-20"></div>
